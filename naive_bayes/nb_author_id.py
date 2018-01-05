@@ -26,7 +26,28 @@ features_train, features_test, labels_train, labels_test = preprocess()
 
 #########################################################
 ### your code goes here ###
-#TEST
+from sklearn import metrics
+from sklearn.naive_bayes import GaussianNB
+
+model = GaussianNB()
+
+t0 = time()
+model.fit(features_train, labels_train)
+print "predict time:", round(time()-t0, 3), "s"
+
+print(model)
+
+
+expected = labels_test
+t0 = time()
+predicted = model.predict(features_test)
+print "predict time:", round(time()-t0, 3), "s"
+
+# summarize the fit of the model
+print(metrics.classification_report(expected, predicted))
+print(metrics.confusion_matrix(expected, predicted))
+
+
 
 #########################################################
 
