@@ -12,7 +12,6 @@
     You fill in the regression code where indicated:
 """    
 
-
 import sys
 import pickle
 sys.path.append("../tools/")
@@ -21,7 +20,7 @@ dictionary = pickle.load( open("../final_project/final_project_dataset_modified.
 
 ### list the features you want to look at--first item in the 
 ### list will be the "target" feature
-features_list = ["bonus", "salary"]
+features_list = ["bonus", "long_term_incentive"]
 data = featureFormat( dictionary, features_list, remove_any_zeroes=True)
 target, features = targetFeatureSplit( data )
 
@@ -30,6 +29,25 @@ from sklearn.cross_validation import train_test_split
 feature_train, feature_test, target_train, target_test = train_test_split(features, target, test_size=0.5, random_state=42)
 train_color = "b"
 test_color = "b"
+
+from sklearn import datasets, linear_model
+from sklearn.metrics import mean_squared_error, r2_score
+
+reg = linear_model.LinearRegression()
+
+reg.fit(feature_train, target_train)
+
+# Make predictions using the testing set
+pred = reg.predict(feature_test)
+
+# The coefficients
+print('Slope: \n', reg.coef_)
+print('Intrecept: \n', reg.intercept_)
+# The mean squared error
+print("Mean squared error: %.2f"
+      % mean_squared_error(target_test, pred))
+
+print('Variance score: %.2f' % r2_score(target_test, pred))
 
 
 

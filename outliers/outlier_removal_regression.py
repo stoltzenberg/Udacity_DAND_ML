@@ -29,7 +29,26 @@ ages_train, ages_test, net_worths_train, net_worths_test = train_test_split(ages
 
 
 
+from sklearn import datasets, linear_model
+from sklearn.metrics import mean_squared_error, r2_score
 
+reg = linear_model.LinearRegression()
+
+reg.fit(ages_train, net_worths_train)
+
+# Make predictions using the testing set
+pred = reg.predict(ages_test)
+
+# The coefficients
+print('Slope: \n', reg.coef_)
+print('Intrecept: \n', reg.intercept_)
+# The mean squared error
+print("Mean squared error: %.2f"
+      % mean_squared_error(ages_test, pred))
+
+print "Score: ", reg.score(ages_test, net_worths_test)
+
+print('Variance score: %.2f' % r2_score(ages_test, pred))
 
 
 
@@ -64,7 +83,7 @@ if len(cleaned_data) > 0:
     ages, net_worths, errors = zip(*cleaned_data)
     ages       = numpy.reshape( numpy.array(ages), (len(ages), 1))
     net_worths = numpy.reshape( numpy.array(net_worths), (len(net_worths), 1))
-
+    
     ### refit your cleaned data!
     try:
         reg.fit(ages, net_worths)
@@ -77,6 +96,17 @@ if len(cleaned_data) > 0:
     plt.xlabel("ages")
     plt.ylabel("net worths")
     plt.show()
+    
+    print('New Slope: \n', reg.coef_)
+    print('New Intrecept: \n', reg.intercept_)
+    print("New Mean squared error: %.2f"
+      % mean_squared_error(ages_test, pred))
+
+    print "New Score: ", reg.score(ages_test, net_worths_test)
+    
+    print('New Variance score: %.2f' % r2_score(ages_test, pred))
+    
+    
 
 
 else:
