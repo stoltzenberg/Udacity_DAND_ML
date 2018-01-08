@@ -38,6 +38,18 @@ labels_train   = labels_train[:150]
 
 
 ### your code goes here
+from sklearn.metrics import accuracy_score 
+from sklearn import tree 
+clf = tree.DecisionTreeClassifier() 
+clf = clf.fit(features_train, labels_train) 
+pred = clf.predict(features_test)
+print accuracy_score(labels_test, pred)
 
+importances = clf.feature_importances_
+indices = numpy.argsort(importances)[::-1]
+round(len(importances)*0.2)
 
+#for f in range(int(round(len(importances)*0.002))):
+for f in range(10):
+    print("%d. feature %d (%f)" % (f + 1, indices[f], importances[indices[f]]))
 
